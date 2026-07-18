@@ -72,6 +72,31 @@ All config is via environment variables (`.env`):
 | `MQTT_PASS` | no | — | Broker password |
 | `DISCOVERY_PREFIX` | no | `homeassistant` | HA discovery prefix |
 
+## Run as a Home Assistant add-on
+
+On Home Assistant OS / Supervised you can run the bridge as a native add-on
+instead of Docker Compose (this repository doubles as an add-on repository):
+
+[![Add repository to my Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FTommo-101%2FUPAQ-MQTT)
+
+1. **Settings → Add-ons → Add-on store → ⋮ → Repositories**, add
+   `https://github.com/Tommo-101/UPAQ-MQTT` (or click the badge above).
+2. Install **UniFi Protect Air Quality (MQTT)** and fill in the Protect
+   details on the Configuration tab — the add-on exposes the same settings as
+   the environment variables above.
+3. Start the add-on and check its log. Full details in
+   [upaq_mqtt/DOCS.md](upaq_mqtt/DOCS.md).
+
+Add-on notes:
+
+- With the Mosquitto broker add-on, leave all `mqtt_*` options empty: host,
+  port, and credentials are picked up from Home Assistant service discovery.
+- Maintainer note: `upaq_mqtt/bridge.py` is a copy of the root `bridge.py`
+  (add-on builds can only see files inside the add-on folder). After changing
+  the root file, run `cp bridge.py upaq_mqtt/bridge.py` and bump `version` in
+  `upaq_mqtt/config.yaml` so installed add-ons are offered the update. CI
+  fails if the two copies drift.
+
 ## How it works
 
 `bridge.py` logs in, reads `/proxy/protect/api/bootstrap` for initial state,

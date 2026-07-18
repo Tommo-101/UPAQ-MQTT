@@ -1,0 +1,30 @@
+name: UniFi Protect Air Quality (MQTT)
+version: "1.1.0"
+slug: upaq_mqtt
+description: >-
+  Bridges UniFi Protect UP-AirQuality sensors to MQTT with Home Assistant
+  discovery, including LED controls and alert thresholds.
+url: https://github.com/Tommo-101/UPAQ-MQTT
+arch:
+  - aarch64
+  - amd64
+  - armv7
+init: false
+startup: application
+boot: auto
+services:
+  - mqtt:want
+options:
+  protect_host: ""
+  protect_user: ""
+  protect_pass: ""
+  discovery_prefix: homeassistant
+schema:
+  protect_host: str
+  protect_user: str
+  protect_pass: password
+  discovery_prefix: str
+  mqtt_host: str?
+  mqtt_port: port?
+  mqtt_user: str?
+  mqtt_pass: password?

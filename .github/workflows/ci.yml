@@ -25,3 +25,12 @@ jobs:
 
       - name: Docker build
         run: docker build -t upaq-mqtt .
+
+      - name: Add-on bridge.py in sync with root
+        run: diff -u bridge.py upaq_mqtt/bridge.py
+
+      - name: Add-on Docker build
+        run: >-
+          docker build
+          --build-arg BUILD_FROM=ghcr.io/home-assistant/amd64-base:3.21
+          -t upaq-mqtt-addon upaq_mqtt

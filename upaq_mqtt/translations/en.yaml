@@ -1,0 +1,33 @@
+configuration:
+  protect_host:
+    name: UniFi Protect host
+    description: >-
+      IP address or hostname of your UniFi Protect controller (UDM/UNVR/CK),
+      without https://.
+  protect_user:
+    name: Protect username
+    description: >-
+      A local account on the controller (not a UI Cloud login). A dedicated
+      user for this bridge is recommended.
+  protect_pass:
+    name: Protect password
+    description: Password for the local Protect account.
+  discovery_prefix:
+    name: MQTT discovery prefix
+    description: >-
+      Home Assistant MQTT discovery prefix. Leave at "homeassistant" unless
+      you changed it in the MQTT integration.
+  mqtt_host:
+    name: MQTT broker host (optional)
+    description: >-
+      Leave empty to auto-detect the Mosquitto broker add-on. Set only when
+      using an external broker.
+  mqtt_port:
+    name: MQTT broker port (optional)
+    description: Broker port, defaults to 1883. Only used when a host is set.
+  mqtt_user:
+    name: MQTT username (optional)
+    description: Broker username. Only used when a host is set.
+  mqtt_pass:
+    name: MQTT password (optional)
+    description: Broker password. Only used when a host is set.
