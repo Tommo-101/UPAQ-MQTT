@@ -71,12 +71,15 @@ All config is via environment variables (`.env`):
 | `MQTT_USER` | no | — | Broker username (omit for anonymous) |
 | `MQTT_PASS` | no | — | Broker password |
 | `DISCOVERY_PREFIX` | no | `homeassistant` | HA discovery prefix |
+| `PUBLISH_INTERVAL` | no | `0` | Seconds between routine reading updates (`0` = publish every change). Status-level changes and a new vape detection are always sent immediately |
 
 ## How it works
 
 `bridge.py` logs in, reads `/proxy/protect/api/bootstrap` for initial state,
 then connects to Protect's `/proxy/protect/ws/updates` WebSocket and
-republishes to MQTT on every change (event-driven, ~instant). Each discovered
+republishes to MQTT on every change (event-driven, ~instant). The sensor reports
+roughly once a second, so set `PUBLISH_INTERVAL` (e.g. `30`) to cut Home Assistant
+recorder writes; the latest values are still sent when each interval elapses. Each discovered
 UP-AirQuality sensor gets its own state and control topics based on its device
 MAC, while all entities share one bridge availability topic for MQTT Last Will
 handling. Control changes from Home Assistant are `PATCH`ed back to the
